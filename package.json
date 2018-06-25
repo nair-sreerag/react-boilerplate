@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server ./src/index.js",
-    "build": "webpack"
+    "build": "webpack",
+    "watch" : "webpack --progress --watch",
+    "server" : "webpack-dev-server --open"
   },
   "author": "SreeraG",
   "license": "ISC",
