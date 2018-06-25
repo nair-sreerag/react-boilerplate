@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Test from './Test'
+import App from './App'
 
 ReactDOM.render(
     //  React.createElement("h1",null,"Hello world"),                  
-    <Test />,                //<-- name of thr test app
+    <App />,                //<-- name of the test app
     document.getElementById("root")
 );
