@@ -19,7 +19,17 @@ module.exports = {
         rules: [
           { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
           { test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
+          {
+            test: /\.(png|jpg|gif|svg|webm)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {}
+              }
+            ]
+          },
           { test : /\.css$/, use : ["style-loader", "css-loader"] }
+
         ]
     },
     // plugins: [
