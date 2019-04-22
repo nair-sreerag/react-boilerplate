@@ -9,7 +9,7 @@
     "build": "webpack",
     "watch": "webpack --progress --watch",
     "server": "webpack-dev-server --open",
-    "generate" : "node ./automate/_generateFile.js"
+    "generate": "node ./automate/_generateFile.js"
   },
   "author": "SreeraG",
   "license": "ISC",
