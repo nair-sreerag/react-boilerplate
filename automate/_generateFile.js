@@ -59,7 +59,32 @@ try {
     }
 
 
-    const template = `
+    const template = isComponentCall
+        ?
+        `
+        import React from 'react';
+        import './${args[1]}Component.css'
+        
+        export default class ${args[1]}Component extends React.Component{
+            constructor(props){
+                super(props)
+
+                this.state = {
+                    // enter state variables
+                }
+            }
+
+            render(){
+                return (
+                    //start writing here...
+                    <span>${args[1]}Component has been generated!</span>
+                )
+            }
+        }
+        
+        `
+        :
+        `
         import React , { Component } from 'react';
         import './${args[0]}Component.css'
         
@@ -71,17 +96,11 @@ try {
         }
         
         export default ${args[0]}Component;
-    `
+        `
 
 
 
     function generateComponent() {
-
-        console.log(`global.pathToRoot : ${global.pathToRoot},
-                     global.pathToSaveComponent : ${global.pathToSaveComponent},
-                     writeFilePath : ${writeFilePath},
-                     openSyncPath : ${openSyncPath}`)
-
 
         //check if the folder exists...
         if (fs.existsSync(pathToSaveComponent)) {
@@ -92,7 +111,6 @@ try {
                 fs.closeSync(fs.openSync(openSyncPath, 'w'))
             })
         } else {
-            console.log("Doesnt exist")
             //create src or component and save it in the directory
             fs.mkdir(pathToSaveComponent, function (err) {
                 if (err) console.error(err)
