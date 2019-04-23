@@ -19,12 +19,8 @@ try {
     // component type is specified but not the name
     if (isComponentCall && !args[1]) throw new Error("Please specify a component name.")
 
-    // if everything is valid for component generation
-    else if (isComponentCall && args[1]) {
-        console.log("Component call!!!!!")
-    }
     // just to generate a simple file
-    else if (!isComponentCall && args[1]) throw new Error("Please use the 'component' keyword to generate a component template or just enter the filename to generate a React file.")
+    if (!isComponentCall && args[1]) throw new Error("Please use the 'component' keyword to generate a component template or just enter the filename to generate a React file.")
 
 
     switch (os) {
