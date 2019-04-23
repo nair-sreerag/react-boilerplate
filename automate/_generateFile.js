@@ -35,16 +35,16 @@ try {
             global.pathToRoot = process.cwd()
             global.pathToSaveComponent = pathToRoot + (isComponentCall ? "\\src\\components" : "\\src")
             // global.pathToComponent = pathToRoot + `\\component\\${args[1]}`
-            writeFilePath = pathToSaveComponent + `\\${isComponentCall ? args[1] : args[0]}Component.js`
-            openSyncPath = pathToSaveComponent + `\\${isComponentCall ? args[1] : args[0]}Component.css`
+            writeFilePath = pathToSaveComponent + `\\${isComponentCall ? args[1] : args[0] + "Component"}.js`
+            openSyncPath = pathToSaveComponent + `\\${isComponentCall ? args[1] : args[0] + "Component"}.css`
             break;
 
         case 'linux':
             global.pathToRoot = process.cwd()
             global.pathToSaveComponent = pathToRoot + (isComponentCall ? "/src/components" : "/src")
             // global.pathToComponent = pathToRoot + `/component/${args[1]}`
-            writeFilePath = pathToSaveComponent + `/${isComponentCall ? args[1] : args[0]}Component.js`
-            openSyncPath = pathToSaveComponent + `/${isComponentCall ? args[1] : args[0]}Component.css`
+            writeFilePath = pathToSaveComponent + `/${isComponentCall ? args[1] : args[0] + "Component"}.js`
+            openSyncPath = pathToSaveComponent + `/${isComponentCall ? args[1] : args[0] + "Component"}.css`
             break;
 
         case 'freebsd':
@@ -63,9 +63,9 @@ try {
         ?
         `
         import React from 'react';
-        import './${args[1]}Component.css'
+        import './${args[1]}.css'
         
-        export default class ${args[1]}Component extends React.Component{
+        export default class ${args[1]} extends React.Component{
             constructor(props){
                 super(props)
 
@@ -77,7 +77,7 @@ try {
             render(){
                 return (
                     //start writing here...
-                    <span>${args[1]}Component has been generated!</span>
+                    <span>${args[1]} has been generated!</span>
                 )
             }
         }
