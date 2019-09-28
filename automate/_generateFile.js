@@ -12,16 +12,30 @@ let openSyncPath = undefined
 try {
 
     var args = process.argv.slice(2)
+    let permissibleArgs = [
+        "no-css"
+    ]
+
+
+    //to check whether to create a component inside a folder called 'components'
     let isComponentCall = false;
+    let generateCSS = true
 
     if (args[0] == "component") isComponentCall = true
+
+    if (args.includes("no-css")) generateCSS = false
+
 
     // component type is specified but not the name
     if (isComponentCall && !args[1]) throw new Error("Please specify a component name.")
 
     // just to generate a simple file
-    if (!isComponentCall && args[1]) throw new Error("Please use the 'component' keyword to generate a component template or just enter the filename to generate a React file.")
+    // if (!isComponentCall && args[1]) throw new Error("Please use the 'component' keyword to generate a component template or just enter the filename to generate a React file.")
 
+    if (!isComponentCall && args.length > 1 && args.slice(1).some(function(a){
+        return !permissibleArgs.includes(a)
+    })) 
+    throw new Error("Please enter the correct flags.")
 
     switch (os) {
 
@@ -62,40 +76,40 @@ try {
     const template = isComponentCall
         ?
         `
-        import React from 'react';
-        import './${args[1]}.css'
+import React from 'react';
+${generateCSS ? `import './${args[1]}.css'` : ''}
         
-        export default class ${args[1]} extends React.Component{
-            constructor(props){
-                super(props)
+export default class ${args[1]} extends React.Component {
+    constructor(props) {
+        super(props)
 
-                this.state = {
-                    // enter state variables
-                }
-            }
-
-            render(){
-                return (
-                    //start writing here...
-                    <span>${args[1]} has been generated!</span>
-                )
-            }
+        this.state = {
+            // enter state variables
         }
+    }
+
+    render() {
+        return (
+            //start writing here...
+            <span>${args[1]} has been generated!</span>
+        )
+    }
+}
         
         `
         :
         `
-        import React , { Component } from 'react';
-        import './${args[0]}Component.css'
-        
-        const ${args[0]}Component = () =>{
-            return (
-                //start writing here...
-                <span>${args[0]}Component has been generated!</span>
-            )
-        }
-        
-        export default ${args[0]}Component;
+import React, { Component } from 'react';
+${generateCSS ? `import './${args[0]}Component.css'` : ''}
+
+const ${args[0]}Component = () => {
+    return (
+        //start writing here...
+        <span>${args[0]}Component has been generated!</span>
+    )
+}
+
+export default ${args[0]}Component;
         `
 
 
@@ -108,7 +122,8 @@ try {
             fs.writeFile(writeFilePath, template, function (err) {
                 if (err) console.error(err)
                 //create a css file with the equivalent name
-                fs.closeSync(fs.openSync(openSyncPath, 'w'))
+
+                if (generateCSS) fs.closeSync(fs.openSync(openSyncPath, 'w'))
             })
         } else {
             //create src or component and save it in the directory
@@ -118,7 +133,8 @@ try {
                 fs.writeFile(writeFilePath, template, function (err) {
                     if (err) console.error(err)
                     //create a css file with the equivalent name
-                    fs.closeSync(fs.openSync(openSyncPath, 'w'))
+
+                    if (generateCSS) fs.closeSync(fs.openSync(openSyncPath, 'w'))
                 })
             })
         }
@@ -126,9 +142,9 @@ try {
 
     }
 
-    generateComponent()
+    generateComponent(generateCSS)
 
 }
 catch (err) {
-    console.error(chalk.red(err.message))
+    console.error(chalk.red(err))
 }
